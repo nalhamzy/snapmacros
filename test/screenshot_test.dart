@@ -34,7 +34,12 @@ void main() {
   });
 
   final sizes = <String, _Canvas>{
+    // iPhone 6.9" (iPhone 15/16 Pro Max) — required by App Store
     'ios': const _Canvas(subdir: 'ios', physical: Size(1290, 2796), dpr: 3.0),
+    // iPad Pro 13" (2024) — required when app supports iPad
+    'ipad':
+        const _Canvas(subdir: 'ipad', physical: Size(2064, 2752), dpr: 2.0),
+    // Android tall phone (Pixel-class)
     'android':
         const _Canvas(subdir: 'android', physical: Size(1080, 2400), dpr: 3.0),
   };

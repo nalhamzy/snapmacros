@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
-ThemeData buildSnapMacrosTheme() {
+ThemeData buildSnapMacrosTheme({bool useSystemFonts = false}) {
   final base = ThemeData.dark(useMaterial3: true);
-  final textTheme = GoogleFonts.interTextTheme(base.textTheme).apply(
-    bodyColor: AppColors.textPrimary,
-    displayColor: AppColors.textPrimary,
-  );
+
+  const bodyFamily = 'Inter';
+  const displayFamily = 'SpaceGrotesk';
+
+  TextStyle body(double size,
+          {FontWeight? weight,
+          Color? color,
+          double height = 1.4,
+          double? letterSpacing}) =>
+      TextStyle(
+        fontFamily: useSystemFonts ? null : bodyFamily,
+        fontSize: size,
+        fontWeight: weight,
+        color: color ?? AppColors.textPrimary,
+        height: height,
+        letterSpacing: letterSpacing,
+      );
+
+  TextStyle display(double size,
+          {FontWeight weight = FontWeight.w700,
+          double letterSpacing = -0.8,
+          Color? color}) =>
+      TextStyle(
+        fontFamily: useSystemFonts ? null : displayFamily,
+        fontSize: size,
+        fontWeight: weight,
+        color: color ?? AppColors.textPrimary,
+        letterSpacing: letterSpacing,
+      );
+
   return base.copyWith(
     scaffoldBackgroundColor: AppColors.bg,
     colorScheme: base.colorScheme.copyWith(
@@ -17,31 +42,18 @@ ThemeData buildSnapMacrosTheme() {
       surface: AppColors.card,
       error: AppColors.danger,
     ),
-    textTheme: textTheme.copyWith(
-      displayMedium: GoogleFonts.spaceGrotesk(
-        fontSize: 32, fontWeight: FontWeight.w700,
-        color: AppColors.textPrimary, letterSpacing: -0.8),
-      headlineMedium: GoogleFonts.spaceGrotesk(
-        fontSize: 22, fontWeight: FontWeight.w600,
-        color: AppColors.textPrimary),
-      titleLarge: GoogleFonts.inter(
-        fontSize: 17, fontWeight: FontWeight.w600,
-        color: AppColors.textPrimary),
-      bodyLarge: GoogleFonts.inter(
-        fontSize: 15, color: AppColors.textPrimary, height: 1.4),
-      bodyMedium: GoogleFonts.inter(
-        fontSize: 13, color: AppColors.textSecondary, height: 1.4),
-      labelLarge: GoogleFonts.inter(
-        fontSize: 14, fontWeight: FontWeight.w600,
-        color: AppColors.textPrimary, letterSpacing: 0.2),
+    textTheme: base.textTheme.copyWith(
+      displayMedium: display(32),
+      headlineMedium: display(22, weight: FontWeight.w600, letterSpacing: 0),
+      titleLarge: body(17, weight: FontWeight.w600),
+      bodyLarge: body(15),
+      bodyMedium: body(13, color: AppColors.textSecondary),
+      labelLarge: body(14, weight: FontWeight.w600, letterSpacing: 0.2),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      titleTextStyle: GoogleFonts.spaceGrotesk(
-        fontSize: 20, fontWeight: FontWeight.w700,
-        color: AppColors.textPrimary,
-      ),
+      titleTextStyle: display(20, weight: FontWeight.w700, letterSpacing: 0),
       iconTheme: const IconThemeData(color: AppColors.textPrimary),
     ),
     cardTheme: const CardThemeData(
